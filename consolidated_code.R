@@ -16,8 +16,12 @@ library("ggplot2")
 library("plyr")
 library("stringr")
 
-#set path to text files
+#set path to text files; NK: Can we make it more obvious that this is a place where we need people's input? E.g. 
+###############################################################################
+# ACTION: PUT ALL GRANT DOCUMENTS IN A FOLDER AND SET PATH TO THAT FOLDER HERE 
+###############################################################################
 dest <- "R:/Project/EPAR/Archive/334 - Gender Grand Challenge Portfolio Review/Grant documents/text files"
+# NK: I think this should be reading from "ALL PROPOSALS" folder, the proposals come in as .doc rather than .txt files
 
 #set EPAR specific colors
 epar_colors1 <-  c("#ffffff", "#e5f0ec", "#8ebfad", "#417361", "#e8e3ee", "#9179af", "#3d2f4f")
@@ -219,7 +223,7 @@ graph_2D <- ggplot(tdm_age_df2, aes(word, total, fill = age)) +
 #####################
 
 #saving all the graphs to disk now
-graphs_path <- "R:/Project/EPAR/Working Files/372 - EPAR Tools Development/Code/334"
+graphs_path <- "R:/Project/EPAR/Working Files/372 - EPAR Tools Development/Code/334" # Set path for the "OUTPUT", move this also up top? 
 win.metafile('R:/Project/EPAR/Working Files/372 - EPAR Tools Development/Code/334/iris.wmf')
 plot(graph_2A)
 dev.off()
