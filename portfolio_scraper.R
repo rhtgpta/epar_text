@@ -67,6 +67,7 @@ for (doc_file in mydocxfiles){
     }
     else if ((first_word == "Proposal Title" | second_word == "Proposal Title") == TRUE){
       idx_relevant_table <- i
+      break
     }
   }
   # if no value found
@@ -77,40 +78,21 @@ for (doc_file in mydocxfiles){
   # getting the dataframe with the relevant table
   df <- as.data.frame(tables_list[idx_relevant_table][[1]])
   
-  # getting all non-NA values from the dataframe stored in a vector
-  # reading all rows one-by-one
-  res_list <- vector(mode = "character", length = 0)
-  num_rows_df <- dim(df)[1]
-  num_cols_df <- dim(df)[2]
-  for (i in 1:num_rows_df){
-    curr_row <- df[i,]
-    # reading all values in the rows 
-    row_vals <- vector(mode = "character", length = 0)
-    for (j in 1:num_cols_df){
-      curr_cell <- curr_row[[j]]
-      if (is.na(curr_cell) == FALSE){
-      row_vals <- append(row_vals, curr_cell)
-      }
-    }
-    # appending the final values obtained from a row
-    res_list <- append(res_list, row_vals)
-  }
-  
   # getting all relevant information
   # assuming that the answer is saved in the next element of the searched element
   # good assumption based on the structure of the underlying document
-  proposal_title <- which(res_list == 'Proposal Title')[1] 
-  proposal_title <- res_list[proposal_title + 1]
-  investment_duration <- which(res_list == 'Investment Duration (Months)')[1] 
-  investment_duration <- res_list[investment_duration + 1]
-  requested_amount <- which(res_list == 'Requested Amount (U.S.$)')[1] 
-  requested_amount <- res_list[requested_amount + 1]
-  total_project_cost <- which(res_list == 'Total Project Cost (U.S.$)')[1]
-  total_project_cost <- res_list[total_project_cost + 1]
-  organization_legal_name <- which(res_list == 'Organization Legal Name1')[1]
-  organization_legal_name <- res_list[organization_legal_name + 1]
-  organization_country <- which(res_list == 'Country')[1]
-  organization_country <- res_list[organization_country + 1]
+  indices <- which(df == 'Proposal Title', arr.ind = TRUE) 
+  proposal_title <- df[[indices[2]+1]][indices[1]]
+  indices <- which(df == 'Investment Duration (Months)', arr.ind = TRUE)
+  investment_duration <- df[[indices[2]+1]][indices[1]]
+  indices<- which(df == 'Requested Amount (U.S.$)', arr.ind = TRUE)
+  requested_amount <- df[[indices[2]+1]][indices[1]]
+  indices <- which(df == 'Total Project Cost (U.S.$)', arr.ind = TRUE)
+  total_project_cost <- df[[indices[2]+1]][indices[1]]
+  indices <- which(df == 'Organization Legal Name1', arr.ind = TRUE)
+  organization_legal_name <- df[[indices[2]+1]][indices[1]]
+  indices <- which(df == 'Country', arr.ind = TRUE)
+  organization_country <- df[[indices[2]+1]][indices[1]]
   
   # country of intervention is based on the premise that it will be mentioned the most in a document
   # reading the docx file from the textreadr package
