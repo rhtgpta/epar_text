@@ -1,3 +1,19 @@
+# Purpose of script: This script was developed by the Evans School Policy Analysis & Research Group (EPAR) to extract basic grant 
+# information from Gates Foundation's grant "Proposal Narratives", a template for which is publicly found here: 
+# https://www.gatesfoundation.org/~/media/GFO/How-We-Work/RFP/Polio-Lessons-RFP_Proposal-Narrative.docx?la=en
+
+# Authors: Rohit Gupta, Muel Kiel, and Namrata Kolla
+# Date: 24 October 2018
+
+# Inputs: This scripts takes in a folder of grant proposals (in .txt format), 
+# a csv file with stemmed keywords and the buckets to which they belong,
+# a csv file with txt file names and their corresponding regions (East Africa/Asia etc.)
+# Outputs: a set of graphs in the wmf format (Word documents) in the working directory
+
+###############################################################
+# LINES LIKE THESE MARK PLACES WHERE USERS MUST PROVIDE INPUT #
+###############################################################
+
 #clear workspace
 rm(list = ls())
 
@@ -16,7 +32,9 @@ library("ggplot2")
 library("plyr")
 library("stringr")
 
-################ input space ####################
+#############################################
+# PROVIDE PATHS TO RELEVANT FILES & FOLDERS #
+#############################################
 
 #define the path to grant text files
 dest <- "\\\\netid.washington.edu/wfs/EvansEPAR/Project/EPAR/Archive/334 - Gender Grand Challenge Portfolio Review/Grant documents/text files"
