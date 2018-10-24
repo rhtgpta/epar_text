@@ -1,3 +1,17 @@
+# Purpose of script: This script was developed by the Evans School Policy Analysis & Research Group (EPAR) to extract basic grant 
+# information from Gates Foundation's grant "Proposal Narratives", a template for which is publicly found here: 
+# https://www.gatesfoundation.org/~/media/GFO/How-We-Work/RFP/Polio-Lessons-RFP_Proposal-Narrative.docx?la=en
+
+# Authors: Rohit Gupta, Muel Kiel, and Namrata Kolla
+# Date: 24 October 2018
+
+# Outputs: This scripts takes in a folder of proposal narratives (in .doc or .docx format) and outputs a spreadsheet in the working
+# directory with the basic grant information scraped for each document.
+
+###############################################################
+# LINES LIKE THESE MARK PLACES WHERE USERS MUST PROVIDE INPUT #
+###############################################################
+
 # clear workspace
 rm(list = ls())
 
@@ -14,12 +28,14 @@ library(dplyr)
 library(textreadr)
 library(stringr)
 
-##################### input space ###########################
+#############################################
+# PROVIDE PATHS TO RELEVANT FILES & FOLDERS #
+#############################################
 
-# set the directory of proposals
+# set the directory of proposals (folder where proposal narratives are being kept)
 dest <- "R:/Project/EPAR/Working Files/372 - EPAR Tools Development/Code/334/scraping_docs/"
 
-# set a working directory
+# set a working directory (folder where spreadsheet of scraped basic info will be exported to)
 setwd("R:/Project/EPAR/Working Files/372 - EPAR Tools Development/Code/334/")
 
 #############################################################
@@ -29,6 +45,7 @@ list_countries <- read.csv("country_names.csv")
 
 #getting all docx files from the path provided
 mydocxfiles <- list.files(path = dest, pattern = "docx",  full.names = FALSE)
+  # NKQ: Will this work for docs that are .doc instead of .docx? 
 
 # initialize the dataframe
 final_df <- data.frame(Proposal_File_Name = character(),
