@@ -43,6 +43,9 @@ dest <- "\\\\netid.washington.edu/wfs/EvansEPAR/Project/EPAR/Archive/334 - Gende
 #setwd("R:/Project/EPAR/Working Files/372 - EPAR Tools Development/Code/334/")
 setwd("\\\\netid.washington.edu/wfs/EvansEPAR/Project/EPAR/Working Files/372 - EPAR Tools Development/Code/334/")
 
+# Make sure your csv of dictionary terms (keywords and their buckets) and your csv of region information are available
+# in your working directory (the path above). They should not be nested in any folders. 
+
 #################################################
 
 #reading the csv for the dictionary terms
