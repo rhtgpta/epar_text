@@ -5,7 +5,7 @@
 # Authors: Rohit Gupta, Muel Kiel, and Namrata Kolla
 # Date: 24 October 2018
 
-# Outputs: This scripts takes in a folder of proposal narratives (in .doc or .docx format) and outputs a spreadsheet in the working
+# Outputs: This scripts takes in a folder of proposal narratives (in .docx format) and outputs a spreadsheet in the working
 # directory with the basic grant information scraped for each document.
 
 ###############################################################
@@ -45,7 +45,6 @@ list_countries <- read.csv("country_names.csv")
 
 #getting all docx files from the path provided
 mydocxfiles <- list.files(path = dest, pattern = "docx",  full.names = FALSE)
-  # NKQ: Will this work for docs that are .doc instead of .docx? 
 
 # initialize the dataframe
 final_df <- data.frame(Proposal_File_Name = character(),
