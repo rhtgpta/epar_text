@@ -55,6 +55,7 @@ final_df <- data.frame(Proposal_File_Name = character(),
                        Organization_Legal_Name = character(), 
                        Organization_Country = character(), 
                        Country_of_Intervention = character(),
+                       Country_Intervention_ISO = character(),
                        Region = character(),
                        stringsAsFactors=FALSE)
 col_names_df <- colnames(final_df)
@@ -189,14 +190,16 @@ for (doc_file in mydocxfiles){
   if (top_row$Freq != 0 && str_trim(as.character(top_row$Country)) != "United States"){
     intervention_country <- str_trim(as.character(top_row$Country))
     intervention_region <- str_trim(as.character(top_row$Region))
+    intervention_iso <- str_trim(as.character(top_row$Country_ISO3))
   } else{
     intervention_country <- ""
     intervention_region <- ""
+    intervention_iso <- ""
   }
   
   # the final row for every document
   final_row <- c(doc_file, proposal_title, investment_duration, requested_amount, total_project_cost, organization_legal_name, 
-                 organization_country, intervention_country, intervention_region)
+                 organization_country, intervention_country, intervention_iso, intervention_region)
   print (final_row)
   
   # appending data to the final dataframe
@@ -210,4 +213,3 @@ colnames(final_df) <- col_names_df
 write.csv(final_df, "scraping_result.csv", row.names = FALSE)
 
 ##################################################
-
