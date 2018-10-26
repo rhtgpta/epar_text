@@ -47,7 +47,6 @@ country_agg <- as.data.frame(aggregate(Count ~ Country_of_Intervention + Region 
 #making a country map
 country_info_map <- joinCountryData2Map(country_agg, joinCode = "ISO3", 
                                         nameJoinColumn = "Country_Intervention_ISO")
-#plotting the map now
 #opening the file on disk
 png("country_map.png", width = 1200, height = 1200)
 mapCountryData(country_info_map, nameColumnToPlot = "Count", xlim = c(-20,120), ylim = c(10,25), 
@@ -57,8 +56,6 @@ mapCountryData(country_info_map, nameColumnToPlot = "Count", xlim = c(-20,120), 
 dev.off()
 
 #making a region map
-
-#plotting the map now
 #opening the file on disk
 png("region_map.png", width = 1200, height = 1200)
 mapByRegion(country_agg, nameDataColumn = "Count", joinCode = "ISO3", 
