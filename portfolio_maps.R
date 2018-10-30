@@ -1,6 +1,5 @@
-# Purpose of script: This script was developed by the Evans School Policy Analysis & Research Group (EPAR) to extract basic grant 
-# information from Gates Foundation's grant "Proposal Narratives", a template for which is publicly found here: 
-# https://www.gatesfoundation.org/~/media/GFO/How-We-Work/RFP/Polio-Lessons-RFP_Proposal-Narrative.docx?la=en
+# Purpose of script: This script was developed by the Evans School Policy Analysis & Research Group (EPAR) to output 
+# maps with the countries & regions of intervention by Gates Foundation grantees' within a portfolio.
 
 # Authors: Rohit Gupta, Muel Kiel, and Namrata Kolla
 # Date: 24 October 2018
