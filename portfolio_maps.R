@@ -24,15 +24,23 @@ if (length(setdiff(packages, rownames(installed.packages()))) > 0) {
 #load packages
 library("rworldmap")
 
-################ input space ####################
+#############################################
+# PROVIDE PATHS TO RELEVANT FILES & FOLDERS #
+#############################################
 
-#setting the work directory
+#setting the working directory (folder where map image will be exported to)
 setwd("\\\\netid.washington.edu/wfs/EvansEPAR/Project/EPAR/Working Files/372 - EPAR Tools Development/Code/334/")
 
-#################################################
+######################################
+# MAKE UPDATE TO SCRAPING_RESULT CSV #
+######################################
+
+# 1. Move/duplicate .csv result from running portfolio scraper script into the path above, if it's not already there
+# 2. Manually update missing information for country of intervation, if any exist
+
+######################################
 
 #reading the file with the information for country/region of intervention
-#need to manually update the missing info for country of intervention (if any)
 scraping_res <- read.csv("scraping_result.csv")
 
 #getting the relevant columns
