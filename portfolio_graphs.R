@@ -51,6 +51,7 @@ setwd("\\\\netid.washington.edu/wfs/EvansEPAR/Project/EPAR/Working Files/372 - E
 #reading the csv for the dictionary terms
 dict_in <- read.csv("dict_input.csv")
 #reading the csv for region information for grants
+# Q: Could this region inputs file be converged with the scraper? 
 region_in <- read.csv("region_input.csv")
 
 #set EPAR specific colors
