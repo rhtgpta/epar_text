@@ -40,7 +40,8 @@ setwd("R:/Project/EPAR/Working Files/372 - EPAR Tools Development/Code/334/")
 
 #############################################################
 
-# reading the list of all countries 
+# reading the list of all countries ##NKQ: could we make providing this optional? / can we provide a default spreadsheet for the countries 
+## we most commonly work with for the BMGF in case people don't want to come up with the countries & regions themselves? 
 list_countries <- read.csv("country_names.csv")
 
 #getting all docx files from the path provided
