@@ -46,6 +46,20 @@ list_countries <- read.csv("country_names.csv")
 #getting all docx files from the path provided
 mydocxfiles <- list.files(path = dest, pattern = "docx",  full.names = FALSE)
 
+# removing temp docx files in the directory (if any) 
+docx_files <- vector(mode = "character", length = 0)
+for (i in 1:length(mydocxfiles)){
+  # name of the file read
+  name_file <- mydocxfiles[i]
+  # does not contain tilde (~)
+  if (grepl("~", name_file) == FALSE){
+    docx_files <- append(docx_files, name_file)
+  }
+}
+
+# updating the original file
+mydocxfiles <- docx_files
+
 # initialize the dataframe
 final_df <- data.frame(Proposal_File_Name = character(),
                        Proposal_Title = character(), 
