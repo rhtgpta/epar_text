@@ -7,7 +7,7 @@
 
 # Inputs: This scripts takes in a folder of grant proposals (in .txt format), 
 # a csv file with stemmed keywords and the buckets to which they belong,
-# a csv file with txt file names and their corresponding regions (East Africa/Asia etc.)
+# a csv file the was the result of the scraping script
 # Outputs: a set of graphs in the wmf format (Word documents) in the working directory
 
 ###############################################################
@@ -18,7 +18,7 @@
 rm(list = ls())
 
 #getting packages installed/loaded
-packages <- c("tm", "SnowballC", "reshape2", "gplots", "ggplot2", "plyr", "stringr")
+packages <- c("tm", "SnowballC", "reshape2", "gplots", "ggplot2", "plyr", "stringr", "textreadr")
 if (length(setdiff(packages, rownames(installed.packages()))) > 0) {
   install.packages(setdiff(packages, rownames(installed.packages())))  
 }
@@ -31,13 +31,14 @@ library("gplots")
 library("ggplot2")
 library("plyr")
 library("stringr")
+library("textreadr")
 
 #############################################
 # PROVIDE PATHS TO RELEVANT FILES & FOLDERS #
 #############################################
 
 #define the path to grant text files
-dest <- "\\\\netid.washington.edu/wfs/EvansEPAR/Project/EPAR/Archive/334 - Gender Grand Challenge Portfolio Review/Grant documents/text files"
+dest <- "R:/Project/EPAR/Working Files/372 - EPAR Tools Development/Code/334/scraping_docs/"
 
 #setting the work directory
 #setwd("R:/Project/EPAR/Working Files/372 - EPAR Tools Development/Code/334/")
@@ -51,7 +52,9 @@ setwd("\\\\netid.washington.edu/wfs/EvansEPAR/Project/EPAR/Working Files/372 - E
 #reading the csv for the dictionary terms
 dict_in <- read.csv("dict_input.csv")
 #reading the csv for region information for grants
-region_in <- read.csv("region_input.csv")
+region_in <- read.csv("scraping_result.csv")
+sel_var <- c("Proposal_File_Name", "Region")
+region_in <- region_in[sel_var]
 
 #set EPAR specific colors
 epar_colors1 <-  c("#ffffff", "#e5f0ec", "#8ebfad", "#417361", "#e8e3ee", "#9179af", "#3d2f4f")
@@ -60,8 +63,61 @@ epar_graph_colors <- c("#9179af", "#8ebfad", "#f08080", "#417361", "#31698a", "#
 
 #defining the ggplot theme configuration
 ggplot_theme <- theme(axis.text.x = element_text(color="#000000", angle=90, hjust=1, size=8), 
-    panel.background = element_blank(), panel.grid.major = element_line(size = 0.5, linetype = "dashed", colour = "gray"), 
-    legend.position="top")
+                      panel.background = element_blank(), panel.grid.major = element_line(size = 0.5, linetype = "dashed", colour = "gray"), 
+                      legend.position="top")
+
+# reading all the docx files
+# getting all docx files from the path provided
+mydocxfiles <- list.files(path = dest, pattern = "docx",  full.names = FALSE)
+
+# removing temp docx files in the directory (if any) 
+docx_files <- vector(mode = "character", length = 0)
+for (i in 1:length(mydocxfiles)){
+  # name of the file read
+  name_file <- mydocxfiles[i]
+  # does not contain tilde (~)
+  if (grepl("~", name_file) == FALSE){
+    docx_files <- append(docx_files, name_file)
+  }
+}
+
+# updating the original file
+mydocxfiles <- docx_files
+
+# initialize the daraframe to hold all text data read from documents
+corpus_df <- data.frame(doc_id = character(),
+                        text = character(), 
+                        stringsAsFactors=FALSE)
+
+
+# reading all the docx files
+for (i in 1:length(mydocxfiles)){
+  # reading a single file
+  doc <- textreadr::read_docx(paste0(dest, mydocxfiles[i]))
+  
+  # document name
+  doc_name <- mydocxfiles[i]
+  
+  # extract all strings from the list with at least 5 seperate words
+  # assumption is that a meaningful sentence will have at least 5 words
+  
+  # looping through the resultant character list
+  # initialize the empty vector to hold all the eligible strings
+  sentence_str <- ""
+  for (j in 1:length(doc)){
+    # which element
+    elem <- doc[[j]]
+    # splitting the character vector on spaces
+    len_element <- length(strsplit(elem, "\\s+")[[1]])
+    # appending all eligible strings with length > 5
+    if (len_element > 5){
+      sentence_str <- paste(sentence_str, elem)
+    }
+  }
+  
+  # appending to the corpus dataframe
+  corpus_df <- rbind(corpus_df, data.frame(doc_id = doc_name, text = sentence_str))
+}
 
 #color information for only categories
 #making a control: maximum of 8 categories can be plotted on graphs
@@ -72,12 +128,9 @@ if (length(unique(dict_in$bucket)) > 8){
   #selecting length epar graph colors
   num_buckets <- length(unique(dict_in$bucket))
   color_scheme_graphs <- head(epar_graph_colors, num_buckets)
-  
-  #getting all text files from the path provided
-  mytxtfiles <- list.files(path = dest, pattern = "txt",  full.names = TRUE)
-  
+
   #create the corpus
-  mycorpus <- Corpus(DirSource(dest, pattern = "txt"))
+  mycorpus <- Corpus(DataframeSource(corpus_df)) 
   #cleaning the text corpus
   #convert text to lowercase
   mycorpus <- tm_map(mycorpus, content_transformer(tolower))
@@ -129,12 +182,12 @@ if (length(unique(dict_in$bucket)) > 8){
   sum_term <- sum_term[,c("word", "freq")]
   
   #create a grants vector retaining just text file names
-  #check if the '.txt' file extension exists in the name of the grant
-  txt_pattern <- grepl('.txt', grants)
+  #check if the '.docx' file extension exists in the name of the grant
+  txt_pattern <- grepl('.docx', grants)
   grants2 <- grants[txt_pattern]
-  #removing the '.txt' extension from the strings
+  #removing the '.docx' extension from the strings
   rem_txt <- function(string_val) {
-    result <- gsub('.txt', '', string_val)
+    result <- gsub('.docx', '', string_val)
     return (result)
   }
   
@@ -211,7 +264,7 @@ if (length(unique(dict_in$bucket)) > 8){
     colnames(freq_df_term)[which(names(freq_df_term) == "elem")] <- freq_vector[i]
   }
   
-  #removing 'txt' from grants
+  #removing 'docx' from grants
   freq_df_term$grants <- as.vector(sapply(freq_df_term$grants, FUN = rem_txt, simplify = TRUE))
   #graph frequencies between grants
   freq_df_term_melt <- melt(freq_df_term, id.vars="grants")
@@ -223,13 +276,15 @@ if (length(unique(dict_in$bucket)) > 8){
     scale_fill_manual(values = color_scheme_graphs, name = "Legend")
   
   #redoing graph 2B as seperate regions (if >1 region supplied)
-  unq_regions <- as.character(unique(region_in$region))
+  unq_regions <- as.character(unique(region_in$Region))
   if (length(unq_regions) > 1){
     for (i in 1:length(unq_regions)){
       rgn_name <- unq_regions[i]
       #getting associated grants
-      grants_vector <- region_in[region_in$region == rgn_name,]
-      grants_vector <- as.character(grants_vector$file_name)
+      grants_vector <- region_in[region_in$Region == rgn_name,]
+      grants_vector <- as.character(grants_vector$Proposal_File_Name)
+      #removing "docx"
+      grants_vector <- as.vector(sapply(grants_vector, rem_txt))
       #converting to a lowercase
       rgn_name <- str_to_lower(rgn_name)
       #converting space with an underscore
