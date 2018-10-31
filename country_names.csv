@@ -1,0 +1,228 @@
+Country,Region,Country_ISO3
+Afghanistan ,Asia,AFG
+Albania ,Europe,ALB
+Algeria ,North Africa,DZA
+American Samoa ,Oceania,WSM
+Andorra ,Europe,AND
+Angola ,Middle Africa,AGO
+Anguilla ,Caribbean,AIA
+Antigua Barbuda ,Caribbean,ATG
+Argentina ,South America,ARG
+Armenia ,Asia,ARM
+Aruba ,Caribbean,ABW
+Australia ,Oceania,AUS
+Austria ,Europe,AUT
+Azerbaijan ,Asia,AZE
+Bahamas,Caribbean,BHS
+Bahrain ,Middle East,BHR
+Bangladesh ,Asia,BGD
+Barbados ,Caribbean,BRB
+Belarus ,Europe,BLR
+Belgium ,Europe,BEL
+Belize ,Central America,BLZ
+Benin ,West Africa,BEN
+Bermuda ,North America,BMU
+Bhutan ,Asia,BTN
+Bolivia ,South America,BOL
+Bosnia,Europe,BIH
+Botswana ,South Africa,BWA
+Brazil ,South America,BRA
+British Virgin Islands,Caribbean,VGB
+Brunei ,Asia,BRN
+Bulgaria ,Europe,BGR
+Burkina Faso ,West Africa,BFA
+Burma ,Asia,MMR
+Burundi ,East Africa,BDI
+Cambodia ,Asia,KHM
+Cameroon ,Middle Africa,CMR
+Canada ,North America,CAN
+Cape Verde ,West Africa,CPV
+Cayman Islands ,Caribbean,CYM
+Central African Republic,Middle Africa,CAF
+Chad ,Middle Africa,TCD
+Chile ,South America,CHL
+China ,Asia,CHN
+Colombia ,South America,COL
+Comoros ,East Africa,COM
+DRC,Middle Africa,COD
+Democratic Republic  Congo,Middle Africa,COD
+Republic Congo,Middle Africa,COG
+Cook Islands ,Oceania,COK
+Costa Rica ,Central America,CRI
+Cote d'Ivoire ,West Africa,CIV
+Croatia ,Europe,HRV
+Cuba ,Caribbean,CUB
+Cyprus ,Europe,CYP
+Czech Republic ,Europe,CZE
+Denmark ,Europe,DNK
+Djibouti ,East Africa,DJI
+Dominica ,Caribbean,DMA
+Dominican Republic ,Caribbean,DOM
+Timor ,Asia,TLS
+Ecuador ,South America,ECU
+Egypt ,North Africa,EGY
+El Salvador ,Central America,SLV
+Equatorial Guinea ,Middle Africa,GNQ
+Eritrea ,East Africa,ERI
+Estonia ,Europe,EST
+Ethiopia ,East Africa,ETH
+Faroe Islands ,Europe,FRO
+Fiji ,Oceania,FJI
+Finland ,Europe,FIN
+France ,Europe,FRA
+French Guiana ,South America,GUF
+French Polynesia ,Oceania,PYF
+Gabon ,Middle Africa,GAB
+Gambia,West Africa,GMB
+Gaza Strip ,Middle East,GAZ
+Georgia ,Asia,GEO
+Germany ,Europe,DEU
+Ghana ,West Africa,GHA
+Gibraltar ,Europe,GIB
+Greece ,Europe,GRC
+Greenland ,North America,GRL
+Grenada ,Caribbean,GRD
+Guadeloupe ,Caribbean,GLP
+Guam ,Oceania,GUM
+Guatemala ,Central America,GTM
+Guernsey ,Europe,GGY
+Guinea ,West Africa,GIN
+Guinea-Bissau ,West Africa,GNB
+Guyana ,South America,GUY
+Haiti ,Caribbean,HTI
+Honduras ,Central America,HND
+Hong Kong ,Asia,HKG
+Hungary ,Europe,HUN
+Iceland ,Europe,ISL
+India ,Asia,IND
+Indonesia ,Asia,IDN
+Iran ,Middle East,IRN
+Iraq ,Middle East,IRQ
+Ireland ,Europe,IRL
+Isle Man ,Europe,IMN
+Israel ,Middle East,ISR
+Italy ,Europe,ITA
+Jamaica ,Caribbean,JAM
+Japan ,Asia,JPN
+Jersey ,Europe,JEY
+Jordan ,Middle East,JOR
+Kazakhstan ,Asia,KAZ
+Kenya ,East Africa,KEN
+Kiribati ,Oceania,KIR
+North Korea,Asia,PRK
+South Korea,Asia,KOR
+Kuwait ,Middle East,KWT
+Kyrgyzstan ,Asia,KGZ
+Laos ,Asia,LAO
+Latvia ,Europe,LVA
+Lebanon ,Middle East,LBN
+Lesotho ,South Africa,LSO
+Liberia ,West Africa,LBR
+Libya ,North Africa,LBY
+Liechtenstein ,Europe,LIE
+Lithuania ,Europe,LTU
+Luxembourg ,Europe,LUX
+Macau ,Asia,MAC
+Macedonia ,Europe,MKD
+Madagascar ,East Africa,MDG
+Malawi ,East Africa,MWI
+Malaysia ,Asia,MYS
+Maldives ,Asia,MDV
+Mali ,West Africa,MLI
+Malta ,Europe,MLT
+Marshall Islands ,Oceania,MHL
+Martinique ,Caribbean,MTQ
+Mauritania ,West Africa,MRT
+Mauritius ,East Africa,MUS
+Mayotte ,East Africa,MYT
+Mexico ,Central America,MEX
+Micronesia,Oceania,FSM
+Moldova ,Europe,MDA
+Monaco ,Europe,MCO
+Mongolia ,Asia,MNG
+Montserrat ,Caribbean,MSR
+Morocco ,North Africa,MAR
+Mozambique ,East Africa,MOZ
+Myanmar,Asia,MMR
+Namibia ,South Africa,NAM
+Nauru ,Oceania,NRU
+Nepal ,Asia,NPL
+Netherlands ,Europe,NLD
+Netherlands Antilles ,Europe,ANT
+New Caledonia ,Oceania,NCL
+New Zealand ,Oceania,NZL
+Nicaragua ,Central America,NIC
+Niger ,West Africa,NER
+Nigeria ,West Africa,NGA
+Norway ,Europe,NOR
+Oman ,Middle East,OMN
+Pakistan ,Asia,PAK
+Palau ,Oceania,PLW
+Panama ,Central America,PAN
+Papua New Guinea ,Oceania,PNG
+Paraguay ,South America,PRY
+Peru ,South America,PER
+Philippines ,Asia,PHL
+Poland ,Europe,POL
+Portugal ,Europe,PRT
+Puerto Rico ,Caribbean,PRI
+Qatar ,Middle East,QAT
+Reunion ,East Africa,REU
+Romania ,Europe,ROM
+Russia ,Europe,RUS
+Rwanda ,East Africa,RWA
+Saint Helena ,West Africa,SHN
+Saint Kitts Nevis ,Caribbean,KN1
+Saint Lucia ,Caribbean,LCA
+Pierre Miquelon ,North America,SPM
+Saint Vincent Grenadines ,Caribbean,VCT
+Samoa ,Oceania,WSM
+San Marino ,Europe,SMR
+Sao Tome Principe ,Middle Africa,STP
+Saudi Arabia ,Middle East,SAU
+Senegal ,West Africa,SEN
+Serbia ,Europe,SRB
+Seychelles ,East Africa,SYC
+Sierra Leone ,West Africa,SLE
+Singapore ,Asia,SGP
+Slovakia ,Europe,SVK
+Slovenia ,Europe,SVN
+Solomon Islands ,Oceania,SLB
+Somalia ,East Africa,SOM
+South Africa ,South Africa,ZAF
+Spain ,Europe,ESP
+Sri Lanka ,Asia,LKA
+Sudan ,North Africa,SDN
+Suriname ,South America,SUR
+Swaziland ,South Africa,SWZ
+Sweden ,Europe,SWE
+Switzerland ,Europe,CHE
+Syria ,Middle East,SYR
+Taiwan ,Asia,TWN
+Tajikistan ,Asia,TJK
+Tanzania ,East Africa,TZA
+Thailand ,Asia,THA
+Togo ,West Africa,TGO
+Tonga ,Oceania,TON
+Trinidad Tobago ,Caribbean,TTO
+Tunisia ,North Africa,TUN
+Turkey ,Europe,TUR
+Turkmenistan ,Asia,TKM
+Turks Caicos  ,Caribbean,TCA
+Tuvalu ,Oceania,TUV
+Uganda ,East Africa,UGA
+Ukraine ,Europe,UKR
+United Arab Emirates ,Middle East,ARE
+United Kingdom ,Europe,GBR
+United States ,North America,USA
+Uruguay ,South America,URY
+Uzbekistan ,Asia,UZB
+Vanuatu ,Oceania,VUT
+Venezuela ,South America,VEN
+Vietnam ,Asia,VNM
+Virgin Islands ,Caribbean,VIR
+Wallis Futuna ,Oceania,WLF
+Western Sahara ,North Africa,ESH
+Yemen ,Middle East,YEM
+Zambia ,East Africa,ZMB
+Zimbabwe ,East Africa,ZWE
