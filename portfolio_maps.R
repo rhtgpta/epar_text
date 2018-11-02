@@ -49,21 +49,14 @@ country_info_map <- joinCountryData2Map(country_agg, joinCode = "ISO3",
                                         nameJoinColumn = "Country_Intervention_ISO")
 #opening the file on disk
 png("country_map.png", width = 1200, height = 1200)
-mapCountryData(country_info_map, nameColumnToPlot = "Count", xlim = c(-20,120), ylim = c(10,25), 
-               catMethod = "fixedWidth", mapTitle = 'Countries of Intervention',
-               oceanCol = "lightblue", missingCountryCol = "white")
-#closing the file on disk
-dev.off()
-
-#making a region map
-#opening the file on disk
-png("region_map.png", width = 1200, height = 1200)
-mapByRegion(country_agg, nameDataColumn = "Count", joinCode = "ISO3", 
-            nameJoinColumn = "Country_Intervention_ISO", regionType = "GBD",
-            FUN = 'sum', xlim = c(-20,120), ylim = c(10,25), 
-            mapTitle = "Regions of Intervention", catMethod="fixedWidth",
-            oceanCol = "lightblue", missingCountryCol = "white")
-mtext("World Regions broken down by GBD: http://atlas.iapb.org/wp-content/uploads/GBD-21-Regions-Map.pdf",side=1,line=-1)
+par(pty = "m",xaxs = "r", xaxt = 's', xpd = NA, yaxs = "i", yaxt = 's')
+mapParams <- mapCountryData(country_info_map, nameColumnToPlot = "Count", xlim = c(-20,120), ylim = c(10,25),
+                            catMethod = "fixedWidth", oceanCol = "lightblue", missingCountryCol = "white",
+                            mapTitle = "")
+do.call(addMapLegend, c(mapParams, legendLabels="all", legendWidth=3))
+mtext("Number of proposals that intervened in a Country",side=1,line=-2,cex=1,font = 2)
+labelCountries(country_info_map, nameCountryColumn = "Count", col = "Black")
+title(main = ("Distribution of Proposals across Countries"), cex.main = 2)
 #closing the file on disk
 dev.off()
 
