@@ -8,8 +8,8 @@ R, RStudio installed on the machine.
 
 Tools included in the repository include:
 1. Basic Grant Info Scraper
-2. Map Generator (Country of Intervention)
-3. Graph Generator
+2. Map Generator (Countries of Intervention)
+3. Graph Generator (Word Frequencies etc.)
 
 Background: The scripts take a set of word documents (grant info) from a pre-specified directory, and outputs the relevant results (csv file, images etc.) in the 'current working directory'. RAs need to specify paths (usually a couple) within the code by editing the script: one for inputs and one for output.
 Comments in R are marked with a hashtag (#), i.e. meant for readability/understanding and not execution. 
