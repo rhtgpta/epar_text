@@ -17,7 +17,7 @@ Comments in R are marked with a hashtag (#), i.e. meant for readability/understa
 Paths follow the standard directory tree structure format:  
 "R:/Project/EPAR/Working Files/Sample Folder/"
 
-After editing the paths in the script to relevant directories on the drive, the code needs to be 'Run' in RStudio. 
+After editing the paths in the script to relevant directories on the drive, the code needs to be 'Run' in RStudio. If code is being run for the first time on a machine, new packages are downloaded and installed which might take some time.
 RStudio throws out red-colored errors in the console, and normal code execution is in blue/black. A red stop sign is diplayed on the top-right of the console while code is executed in the background.
 
 For more information, have a look at the PPT for scraping [here](https://github.com/rohitgupta91/epar_text/blob/master/EPAR%20Portfolio%20Scraper.pptx).
