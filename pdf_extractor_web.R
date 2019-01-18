@@ -1,49 +1,119 @@
 # clear workspace
 rm(list = ls())
 
+#getting packages installed/loaded
+packages <- c("rvest", "stringi", "stringr", "downloader", "insol")
+if (length(setdiff(packages, rownames(installed.packages()))) > 0) {
+  install.packages(setdiff(packages, rownames(installed.packages())))  
+}
+
+####### INPUT REQUIRED ############
+
+# specify the start and end dates for the results ('yyyy-mm-dd')
+start_date <- '1900-01-01'
+end_date <- '2016-12-31'
+
+# setting the work directory 
+setwd("//netid.washington.edu/wfs/EvansEPAR/Project/EPAR/Working Files/372 - EPAR Tools Development/_TOOLS_Main_Folder/pdf_extractor")
+
+# reading the file with urls
+url_file <- read.csv("web_input_search_terms2.csv") 
+
+####################################
+
 # loading packages
 library(rvest)
 library(stringi)
 library(stringr)
+library(downloader)
+library(insol)
 
-# setting the work directory
-setwd("R:/Project/EPAR/Working Files/372 - EPAR Tools Development/Code/334/")
+# creating a relevant date range for google query
+sdate <- as.POSIXct(strptime(start_date, "%Y-%m-%d"))
+edate <- as.POSIXct(strptime(end_date, "%Y-%m-%d"))
+sdate_jd <- round(JD(sdate, inverse=FALSE))
+edate_jd <- round(JD(edate, inverse=FALSE))
+daterange_query <- paste0('+daterange:', sdate_jd, '-', edate_jd)
 
 # downloading the top 10 results (within "web_results" folder)
+# deleting it first
+unlink("web_results", recursive = TRUE)
 dir.create("web_results")
 
-# reading the file with urls
-url_file <- read.csv("web_input_search_terms.csv")
+# assigning a column name to the url file
 colnames(url_file) <- "urls"
 
+# specifiying a function to download the files from the web
+downloadUrl <- function(url){
+  out <- tryCatch(
+    {
+      # isolating the filename
+      filename <- tail(unlist(strsplit(url, "/", fixed = TRUE)), n = 1)
+      # hitting the url and downloading the file
+      download(url, paste0(down_path, "/", file_url, filename), mode = "wb")
+      # sleep for some seconds
+      Sys.sleep(sample(10:250, 1) * 0.1)
+    },
+    error = function(cond){
+      message("Encountered an error:")
+      message(cond)
+    }
+  )
+  if(inherits(out, "error")) next
+}
+
+# assigning unique id to every url
+unq_id_url <- as.vector(seq(from = 1, to = length(url_file$urls)))
+unq_id_url <- sprintf("url_%03d", unq_id_url)
+
+# initialzing the counter
+cntr <- 0
 # taking urls one-by-one
 len_url <- length(url_file$urls)
 for (i in 1:len_url){
-  
+  cntr <- cntr + 1
+  # progress counter
+  prog <- (cntr/len_url)*100
+  # printing progress
+  print (paste0(round(prog,2), "% of search terms processed..."))
   url <- as.character(url_file[i,])
+  # printing the urls
+  print (url)
+  # assigning the url ids
+  url_id <- unq_id_url[i]
   # making the url in the right format
   # only retreiving pdf filetypes for the search query
   squery <- str_replace_all(url,"[\\s]+","+")
-  squery <- paste0(squery, "+filetype:pdf")
-  squery <- paste0("https://www.google.co.in/search?q=", squery)
+  # handling queries in single quotes
+  squery <- gsub("'", "%22", squery)
+  # getting only pdf results
+  squery <- paste0(squery, "+filetype:pdf", daterange_query)
+  squery <- paste0("http://www.google.com/search?q=", squery)
   
   # getting cleaned results from the first page
   html_s <- read_html(squery)
   vector_links <- html_s %>% html_nodes(xpath='//h3/a') %>% html_attr('href')
   vector_links <- gsub('/url\\?q=','',sapply(strsplit(vector_links[as.vector(grep('url', vector_links))],split='&'),'[',1))
   
+  # initializing vector to save cleaned (http) links only
+  vector_clean <- vector(mode = "character")
+  # checking the resulting vector has all elements in the http format
+  for (j in 1:length(vector_links)){
+    if (grepl("http", vector_links[j]) == TRUE){
+      vector_clean <- append(vector_clean, vector_links[j])
+    }
+  }
+  
   # appending url string in front of every file
-  file_url <- str_replace_all(url,"[\\s]+","_")
+  file_url <- str_replace_all(url_id,"[\\s]+","_")
   file_url <- paste0(file_url, '#$')
   
   # downloading the results now
   down_path <- paste0(getwd(), "/web_results")
-  for (myurl in vector_links) {
-    filename <- tail(unlist(strsplit(myurl, "/", fixed = TRUE)), n = 1)
-    download.file(myurl, destfile = paste0(down_path, "/", file_url, filename), method = 'curl')
-    # sleep for 1 second
-    Sys.sleep(1)
-  }
+  lapply(vector_clean, downloadUrl)
+  
+  # sleep for some seconds
+  Sys.sleep(sample(5:50, 1) * 0.1)
 }
 
 # reading the downloaded files
@@ -64,22 +134,38 @@ for (i in files_remove){
 # reading all pdf files afresh
 pdf_files <- list.files(path = pdf_path, pattern = ".pdf$",  full.names = FALSE)
 
-# splitting the file names to seperate file name and file names
+# splitting the file names to seperate ids and file names
 file_split <- stri_split_fixed(pdf_files, "#$")
-queries <- vector(mode="character")
+ids <- vector(mode="character")
 files <- vector(mode="character")
 for (i in 1:length(file_split)){
-  query_l <- file_split[[i]][1]
+  id_l <- file_split[[i]][1]
   file_l <- file_split[[i]][2]
   # appending both things to the initialized vectors
-  queries <- append(queries, query_l)
+  ids <- append(ids, id_l)
   files <- append(files, file_l)
 }
 
 # for every query we assign associated files
-unique_queries <- unique(queries)
+unique_ids <- (unique(ids))
 unique_files <- unique(files)
 
+# attaching queries to ids
+unique_queries <- vector(mode="character")
+for (i in unique_ids){
+  num_id <- as.integer(str_split(i, "_")[[1]][2])
+  curr_ele <- as.character(url_file$urls[num_id])
+  unique_queries <- append(unique_queries, curr_ele)
+}
+
+queries <- vector(mode="character")
+for (i in ids){
+  num_id <- as.integer(str_split(i, "_")[[1]][2])
+  curr_ele <- as.character(url_file$urls[num_id])
+  queries <- append(queries, curr_ele)
+}
+
+# detecting duplicate downloaded files (if any)
 for (i in 1:length(unique_queries)){
   assign(paste0('query',i), unique_queries[i])
   match_indexes <- which(queries %in% get(paste0('query',i)))
@@ -114,6 +200,7 @@ for (i in 2:length(unique_queries)){
 
 # cleaning up the downloaded files
 # create a new folder (unique_files)
+unlink("unique_files", recursive = TRUE)
 dir.create("unique_files")
 # copying files to the new location
 file.copy(file.path(pdf_path, pdf_files), paste0(getwd(),"/unique_files"))
